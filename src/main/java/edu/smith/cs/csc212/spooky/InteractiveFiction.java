@@ -1,5 +1,6 @@
 package edu.smith.cs.csc212.spooky;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,11 @@ import java.util.List;
  *
  */
 public class InteractiveFiction {
+	
+	 private static List<String> playerStuffs = new ArrayList<>();
+	 private static List<String> stuffs = new ArrayList<>();
+	 private static List<String> stuffsDescription = new ArrayList<>();
+	 private static GameTime Hour = new GameTime();
 
 	/**
 	 * This method actually plays the game.
@@ -20,18 +26,31 @@ public class InteractiveFiction {
 	 */
 	static String runGame(TextInput input, GameWorld game) {
 		// This is the current location of the player (initialize as start).
-		Player player = new Player(game.getStart());
-
+		Player player = new Player(game.getStart(), playerStuffs, Hour);
+		
 		// Play the game until quitting.
 		// This is too hard to express here, so we just use an infinite loop with breaks.
 		while (true) {
 			// Print the description of where you are.
 			Place here = game.getPlace(player.getPlace());
 			
+			stuffsDescription = here.getStuffsDescription();
+			stuffs = here.getStuffs();
+			
 			System.out.println();
+			System.out.println("It is " + Hour + "o'clock");
 			System.out.println("... --- ...");
 			System.out.println(here.getDescription());
-
+			
+			for (String s : stuffsDescription) {
+				System.out.println(s);
+			}
+			
+			//
+			if (player.hasBeenHereBefore()) {
+				System.out.println("You look around and find this place familiar...");
+			}
+	
 			// Game over after print!
 			if (here.isTerminalState()) {
 				break;
@@ -56,7 +75,7 @@ public class InteractiveFiction {
 			// Do not uppercase action -- I have lowercased it.
 			String action = words.get(0).toLowerCase().trim();
 
-			if (action.equals("quit")) {
+			if (action.equals("quit")||action.equals("q")||action.equals("escape")) {
 				if (input.confirm("Are you sure you want to quit?")) {
 					// quit!
 					break;
@@ -64,6 +83,45 @@ public class InteractiveFiction {
 					// go to the top of the game loop!
 					continue;
 				}
+			}
+			
+			if (action.equals("help")) {
+				System.out.println("Please choose the room you want to go to by type in numbers accordingly "
+						+ ", or type 'q', 'quit' or 'escape' to quit");
+				continue;
+			}
+			
+			if (action.equals("search")) {
+				System.out.println("You search the room for additional exits.");
+				here.search();
+				continue;
+			}
+
+			if (action.equals("take")) {
+				if (stuffs.size() == 0) {
+					System.out.println("There is nothing you can take with you.");
+				}
+				else {
+					for (String s : stuffs) {
+						System.out.println("You take " + s +".");
+						playerStuffs.add(s);
+					}
+					stuffs.clear();
+					stuffsDescription.clear();
+				}
+				continue;
+			}
+
+			if (action.equals("stuff")) {
+				if (playerStuffs.size() == 0) {
+					System.out.println("You have nothing.");
+				}
+				else {
+					for (String s : playerStuffs) {
+						System.out.println("You have " + s +".");	
+					}
+				}
+				continue;
 			}
 
 			// From here on out, what they typed better be a number!
@@ -85,7 +143,7 @@ public class InteractiveFiction {
 			if (destination.canOpen(player)) {
 				player.moveTo(destination.getTarget());
 			} else {
-				// TODO: some kind of message about it being locked?
+				System.out.println("You cannot unlock that right now. Maybe with a key?");
 			}
 		}
 

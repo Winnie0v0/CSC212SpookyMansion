@@ -1,7 +1,6 @@
 package edu.smith.cs.csc212.spooky;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,6 +13,14 @@ public class Place {
 	 * This is a list of places we can get to from this place.
 	 */
 	private List<Exit> exits;
+	/**
+	 * This is a list of stuffs we can get from this place.
+	 */
+	private List<String> stuffs;
+	/**
+	 * This is a list of stuffs description we can get from this place.
+	 */
+	private List<String> stuffsDescription;
 	/**
 	 * This is the identifier of the place.
 	 */
@@ -37,6 +44,8 @@ public class Place {
 		this.id = id;
 		this.description = description;
 		this.exits = new ArrayList<>();
+		this.stuffs = new ArrayList<>();
+		this.stuffsDescription = new ArrayList<>();
 		this.terminal = terminal;
 	}
 	
@@ -46,6 +55,31 @@ public class Place {
 	 */
 	public void addExit(Exit exit) {
 		this.exits.add(exit);
+	}
+	
+	/**
+	 * Create a secret exit for the user to navigate to another Place.
+	 * @param exit - the description and target of the other Place.
+	 */
+	public void addSecretExit(SecretExit exit) {
+		this.exits.add(exit);
+	}
+	
+	/**
+	 * Create a locked exit for the user to navigate to another Place.
+	 * @param exit - the description and target of the other Place.
+	 */
+	public void addLockedExit(LockedExit exit) {
+		this.exits.add(exit);
+	}
+	
+	/**
+	 * Create a stuff for this Place.
+	 * @param stuff - the stuff that this place has.
+	 */
+	public void addStuffs(String stuff, String stuffDescription) {
+		this.stuffs.add(stuff);
+		this.stuffsDescription.add(stuffDescription);
 	}
 	
 	/**
@@ -71,6 +105,14 @@ public class Place {
 	public String getDescription() {
 		return this.description;
 	}
+	
+	/**
+	 * The narrative description of stuffs in this place.
+	 * @return what we show to a player about stuffs in this place.
+	 */
+	public List<String> getStuffsDescription() {
+		return this.stuffsDescription;
+	}
 
 	/**
 	 * Get a view of the exits from this Place, for navigation.
@@ -84,6 +126,14 @@ public class Place {
 			}
 		}
 		return visible;
+	}
+	
+	/**
+	 * Get a view of the stuffs from this Place.
+	 * @return all the stuffs from this place.
+	 */
+	public List<String> getStuffs() {
+		return this.stuffs;
 	}
 	
 	/**
@@ -104,6 +154,16 @@ public class Place {
 	 */
 	public static Place create(String id, String description) {
 		return new Place(id, description, false);
+	}
+	
+	/**
+	 * @return Reveal all secret exit.
+	 */
+	public List<Exit> search() {
+		for (Exit e : this.exits) {
+			e.search();
+		}
+		return this.exits;
 	}
 	
 	/**
