@@ -57,14 +57,17 @@ public class SpookyMansion implements GameWorld {
 		attic.addExit(new Exit("entranceHall", "There are stairs leading down."));
 		attic.addExit(new Exit("attic2", "There is more through an archway."));
 
-		Place attic2 = insert(Place.create("attic2", "There's definitely a bat in here somewhere.\n"
-				+ "This part of the attic is brighter, so maybe you're safe here."));
+		NightPlace attic2 = insert(NightPlace.create("attic2", 
+				"There's definitely a bat in here somewhere.\n"
+				+ "This part of the attic is brighter, so maybe you're safe here.",
+				"There's definitely a bat in here somewhere.\n"
+				+ "Moon light shines in so it is brighter. You maybe safe here."));
 		attic2.addExit(new Exit("attic", "There is more back through the archway."));
 		attic2.addExit(new Exit("balcony", "There is a balcony."));
 		attic2.addExit(new Exit("dumbwaiter", "There is a dumbwaiter."));
 		attic2.addExit(new Exit("rooftop", "There is more stairs leading up"));
 		
-		Place balcony = insert(Place.create("balcony", "The night is pitch-black."));
+		NightPlace balcony = insert(NightPlace.create("balcony", "The sun is covered by the cloud", "The night is pitch-black."));
 		balcony.addExit(new Exit("attic2", "Return to the attic."));
 		balcony.addExit(new Exit("jump", "You could jump off, but you can't see the ground."));
 
@@ -87,7 +90,9 @@ public class SpookyMansion implements GameWorld {
 		secretRoom.addExit(new Exit("basement", "There is a old wood door."));
 		secretRoom.addExit(new Exit("dumbwaiter", "There is a dumbwaiter."));
 				
-		Place rooftop = insert(Place.create("rooftop", "You have found the rooftop. You breath the fresh air."));
+		NightPlace rooftop = insert(NightPlace.create("rooftop", 
+				"You have found the rooftop. You breath the fresh air and feel the sun.", 
+				"You have found the rooftop. The moon looks creepy and it is cold out there"));
 		rooftop.addExit(new Exit("attic2", "Go back."));
 		
 		Place storageRoom = insert(Place.create("storageRoom", "You have found the storage room. "
@@ -161,6 +166,18 @@ public class SpookyMansion implements GameWorld {
 	 * @return the place you gave us, so that you can store it in a variable.
 	 */
 	private Place insert(Place p) {
+		places.put(p.getId(), p);
+		return p;
+	}
+	
+	/**
+	 * This helper method saves us a lot of typing. We always want to map from p.id
+	 * to p.
+	 * 
+	 * @param p - the place.
+	 * @return the place you gave us, so that you can store it in a variable.
+	 */
+	private NightPlace insert(NightPlace p) {
 		places.put(p.getId(), p);
 		return p;
 	}

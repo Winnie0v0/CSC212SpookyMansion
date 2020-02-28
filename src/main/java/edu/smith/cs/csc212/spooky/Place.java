@@ -102,7 +102,7 @@ public class Place {
 	 * The narrative description of this place.
 	 * @return what we show to a player about this place.
 	 */
-	public String getDescription() {
+	public String getDescription(GameTime Time) {
 		return this.description;
 	}
 	

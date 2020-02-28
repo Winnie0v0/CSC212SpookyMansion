@@ -21,6 +21,10 @@ public class Player {
 	 */
 	private GameTime time;
 	/**
+	 * The time now in the mansion.
+	 */
+	private GameTime finaltime;
+	/**
 	 * The ID of the Place where player visited.
 	 */
 	private Set<String> visited;
@@ -34,11 +38,12 @@ public class Player {
 	 * @param initialPlace - where do we start?
 	 * @param time - what time is it?
 	 */
-	public Player(String initialPlace, List<String> stuffPlayerHas, GameTime time) {
+	public Player(String initialPlace, List<String> stuffPlayerHas, GameTime time, GameTime finaltime) {
 		this.place = initialPlace;
 		this.stuffs = stuffPlayerHas;
 		this.visited = new HashSet<>();
 		this.time = time;
+		this.finaltime = finaltime;
 	}
 
 	/**
@@ -58,11 +63,19 @@ public class Player {
 	}
 	
 	/**
-	 * Get access to the stuffs instance variable from outside this class.
-	 * @return the id of the current list of stuffs the player has.
+	 * Get access to the time instance variable from outside this class.
+	 * @return the time.
 	 */
 	public GameTime getTime() {
-		return this.time;
+		return time;
+	}
+	
+	/**
+	 * Get access to the final time instance variable from outside this class.
+	 * @return the time.
+	 */
+	public GameTime getFinalTime() {
+		return finaltime;
 	}
 
 	/**
@@ -73,11 +86,30 @@ public class Player {
 	}
 	
 	/**
+	 * Increase the final time every time the method is called
+	 */
+	public void increaseFinalTime() {
+		this.finaltime.increaseFinalHour();
+	}
+	
+	/**
+	 * Call this method when the player moves to a new place.
+	 * @param place - the place we are now located at.
+	 */
+	public void rest() {
+		this.increaseTime();
+		this.increaseTime();
+		this.increaseFinalTime();
+		this.increaseFinalTime();
+	}
+	
+	/**
 	 * Call this method when the player moves to a new place.
 	 * @param place - the place we are now located at.
 	 */
 	public void moveTo(String place) {
 		this.increaseTime();
+		this.finaltime.increaseFinalHour();
 		this.rememberThisPlace();
 		this.place = place;
 	}

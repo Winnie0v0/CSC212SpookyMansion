@@ -8,14 +8,14 @@ import java.util.Random;
  */
 public class GameTime {
 
-	private Random rand = new Random();
+	private  Random rand = new Random();
 	
-	int Hour = rand.nextInt(24);
+	int Hour = rand.nextInt(24); 
 	
-	int finalHour;
+	int finalHour = 0;
 	
 	public GameTime() {	
-
+		
 	}
 	
 	/**
@@ -27,10 +27,18 @@ public class GameTime {
 	}
 	
 	/**
+	 * It tells you how much time did you spend in the Mansion.
+	 * @return Time
+	 */
+	public int getFinalHour() {
+		return finalHour;
+	}
+	
+	/**
 	 * It increases hour by one every time it is called.
 	 */
 	public void increaseHour() {
-		if (Hour < 24) {
+		if (Hour < 23) {
 			Hour += 1;
 		}
 		else {
@@ -42,7 +50,21 @@ public class GameTime {
 	 * It increases hour by one every time it is called.
 	 */
 	public void increaseFinalHour() {
-		this.finalHour = Hour + 1;
+		finalHour += 1;
 	}
+	
+	/**
+	 * It test if it is night
+	 */
+	public boolean isNightTime() {
+		if ( Hour >= 23 || Hour <= 5 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
 
 }

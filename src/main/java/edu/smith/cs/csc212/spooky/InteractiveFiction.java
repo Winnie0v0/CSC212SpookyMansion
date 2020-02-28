@@ -17,6 +17,7 @@ public class InteractiveFiction {
 	 private static List<String> stuffs = new ArrayList<>();
 	 private static List<String> stuffsDescription = new ArrayList<>();
 	 private static GameTime Hour = new GameTime();
+	 private static GameTime FinalHour = new GameTime();;
 
 	/**
 	 * This method actually plays the game.
@@ -26,7 +27,7 @@ public class InteractiveFiction {
 	 */
 	static String runGame(TextInput input, GameWorld game) {
 		// This is the current location of the player (initialize as start).
-		Player player = new Player(game.getStart(), playerStuffs, Hour);
+		Player player = new Player(game.getStart(), playerStuffs, Hour, FinalHour);
 		
 		// Play the game until quitting.
 		// This is too hard to express here, so we just use an infinite loop with breaks.
@@ -36,11 +37,19 @@ public class InteractiveFiction {
 			
 			stuffsDescription = here.getStuffsDescription();
 			stuffs = here.getStuffs();
+			Hour = player.getTime();
+			FinalHour = player.getFinalTime();
 			
 			System.out.println();
-			System.out.println("It is " + Hour + "o'clock");
 			System.out.println("... --- ...");
-			System.out.println(here.getDescription());
+			System.out.println(here.getDescription(Hour));
+			
+			if (here.isTerminalState()) {
+				System.out.println("You have spend " + FinalHour.getFinalHour() + " hours in the mansion");
+			}
+			else {
+				System.out.println("It is " + Hour.getHour() + " o'clock");
+			}
 			
 			for (String s : stuffsDescription) {
 				System.out.println(s);
@@ -86,6 +95,16 @@ public class InteractiveFiction {
 			}
 			
 			if (action.equals("help")) {
+				System.out.println("Please choose the room you want to go to by type in numbers accordingly, "
+						+ "or type 'q', 'quit' or 'escape' to quit. "
+						+ "type 'take' to take the stuff you see. "
+						+ "type 'search' to search for a secret exit."
+						+ "type 'stuff' to view the stuff you currently have."
+						+ "type 'rest' to rest for 2 hours");
+				continue;
+			}
+			
+			if (action.equals("help")) {
 				System.out.println("Please choose the room you want to go to by type in numbers accordingly "
 						+ ", or type 'q', 'quit' or 'escape' to quit");
 				continue;
@@ -94,6 +113,12 @@ public class InteractiveFiction {
 			if (action.equals("search")) {
 				System.out.println("You search the room for additional exits.");
 				here.search();
+				continue;
+			}
+			
+			if (action.equals("rest")) {
+				System.out.println("You feel tired and sit down...");
+				player.rest();
 				continue;
 			}
 
