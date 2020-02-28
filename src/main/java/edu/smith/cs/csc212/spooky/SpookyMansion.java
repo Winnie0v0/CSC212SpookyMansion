@@ -57,6 +57,7 @@ public class SpookyMansion implements GameWorld {
 		attic.addExit(new Exit("entranceHall", "There are stairs leading down."));
 		attic.addExit(new Exit("attic2", "There is more through an archway."));
 
+		// The description of this place change at night
 		NightPlace attic2 = insert(NightPlace.create("attic2", 
 				"There's definitely a bat in here somewhere.\n"
 				+ "This part of the attic is brighter, so maybe you're safe here.",
@@ -67,6 +68,7 @@ public class SpookyMansion implements GameWorld {
 		attic2.addExit(new Exit("dumbwaiter", "There is a dumbwaiter."));
 		attic2.addExit(new Exit("rooftop", "There is more stairs leading up"));
 		
+		// The description of this place change at night
 		NightPlace balcony = insert(NightPlace.create("balcony", "The sun is covered by the cloud", "The night is pitch-black."));
 		balcony.addExit(new Exit("attic2", "Return to the attic."));
 		balcony.addExit(new Exit("jump", "You could jump off, but you can't see the ground."));
@@ -90,6 +92,7 @@ public class SpookyMansion implements GameWorld {
 		secretRoom.addExit(new Exit("basement", "There is a old wood door."));
 		secretRoom.addExit(new Exit("dumbwaiter", "There is a dumbwaiter."));
 				
+		// The description of this place change at night
 		NightPlace rooftop = insert(NightPlace.create("rooftop", 
 				"You have found the rooftop. You breath the fresh air and feel the sun.", 
 				"You have found the rooftop. The moon looks creepy and it is cold out there"));

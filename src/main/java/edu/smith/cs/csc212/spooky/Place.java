@@ -66,6 +66,14 @@ public class Place {
 	}
 	
 	/**
+	 * Create a secret exit for the user to navigate to another Place.
+	 * @param exit - the description and target of the other Place.
+	 */
+	public void addDayExit(DayExit exit) {
+		this.exits.add(exit);
+	}
+	
+	/**
 	 * Create a locked exit for the user to navigate to another Place.
 	 * @param exit - the description and target of the other Place.
 	 */

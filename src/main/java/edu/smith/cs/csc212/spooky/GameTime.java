@@ -14,6 +14,9 @@ public class GameTime {
 	
 	int finalHour = 0;
 	
+	/**
+	 * We do not really need anything except the Hour that we return in methods.
+	 */
 	public GameTime() {	
 		
 	}

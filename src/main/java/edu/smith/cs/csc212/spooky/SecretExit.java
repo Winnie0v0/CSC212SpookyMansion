@@ -14,7 +14,6 @@ public class SecretExit extends Exit {
 	 */
 	public SecretExit(String target, String description) {
 		super(target, description);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

@@ -15,7 +15,6 @@ public class LockedExit extends Exit {
 	public LockedExit(String target, String description, String key) {
 		super(target, description);
 		this.Key = key;
-		// TODO Auto-generated constructor stub
 	}
 	
 	

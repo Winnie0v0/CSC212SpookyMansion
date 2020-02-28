@@ -1,7 +1,7 @@
 package edu.smith.cs.csc212.spooky;
 
 /**
- * The night place has their own description that work when it is night time.
+ * The night place has their own description that only work when it is night time.
  * @author macbookpro
  */
 public class NightPlace extends Place {
@@ -9,6 +9,12 @@ public class NightPlace extends Place {
 	String descriptionNight;
 	String description;
 
+	/**
+	 * @param id - see place
+	 * @param description - see place
+	 * @param terminal - see place
+	 * @param descriptionNight - only show at night
+	 */
 	protected NightPlace(String id, String description, boolean terminal, String descriptionNight) {
 		super(id, description, terminal);
 		this.descriptionNight = descriptionNight;
@@ -17,8 +23,8 @@ public class NightPlace extends Place {
 	
 	/**
 	 * The narrative description of this place.
-	 * @param Time determine whether it is day or night.
-	 * @return what we show to a player about this place.
+	 * @param Time - determine whether it is day or night.
+	 * @return what - we show to a player about this place.
 	 */
 	@Override
 	public String getDescription(GameTime Time) {
